@@ -6,21 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="187dp"
-        android:layout_height="71dp"
-        android:text="Lottozahlen:"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="319dp" />
 
-    <EditText
-        android:id="@+id/plain_text_input"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="your lotto tip"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="151dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/plain_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="your lotto tip" />
+
+
+        <CheckBox
+            android:id="@+id/countsCheck"
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:text="Run until matches the tip" />
+
+        <TextView
+            android:id="@+id/counterview"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="runs " />
+
+        <EditText
+            android:id="@+id/runs_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="how many times till match" />
+
+        <Button
+            android:id="@+id/play_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Play" />
+
+        <TextView
+            android:id="@+id/lotto_output"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:text="Lottozahlen:" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
