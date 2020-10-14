@@ -20,6 +20,7 @@ public class KLotto {
         //this.ziehungDarstellen();
     }
 
+    
     public KLotto(int k, int z) {
 
         this.lottoTrommel = lottoTrommel;
