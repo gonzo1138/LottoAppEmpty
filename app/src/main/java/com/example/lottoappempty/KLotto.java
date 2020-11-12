@@ -1,78 +1,65 @@
 package com.example.lottoappempty;
 
+interface ILotto{
+    int kugelmenge = 49;
+}
 
 public class KLotto {
 
     int kugelmenge = 49;
     int kugelZiehungen = 6;
     int aktuelleKugelZiehung = 0;
-    KugelList lottoTrommel;
-    KugelList gezogeneKugeln;
+    KugelList lottoTrommel = new KugelList();
+    KugelList gezogeneKugeln = new KugelList();
     Kugel aktuelleKugel = new Kugel();
-    LottoZiehungenList lottoZiehungenList = new LottoZiehungenList();
 
-    public KLotto(KugelList lottoTrommel, KugelList gezogeneKugeln) {
 
-        this.lottoTrommel = lottoTrommel;
-        this.gezogeneKugeln = gezogeneKugeln;
+    public KLotto(){      // Einfacher konstruktor, der aus den Standard-Parametern die Menge an Kugeln erzeugt
         this.lottokugelnErzeugen();
-        //this.lottoziehung();
-        //this.ziehungDarstellen();
     }
 
-    
-    public KLotto(int k, int z) {
-
-        this.lottoTrommel = lottoTrommel;
-        this.gezogeneKugeln = gezogeneKugeln;
-        kugelmenge = k;
-        kugelZiehungen = z;
+    public KLotto(int kugelmenge, int kugelZiehungen) {
+        this.kugelmenge = kugelmenge;
+        this.kugelZiehungen = kugelZiehungen;
         this.lottokugelnErzeugen();
-        this.lottoziehung();
-        //this.ziehungDarstellen();
     }
 
     public KugelList getLetzteLottoziehung(){
-        return this.lottoZiehungenList.get(this.lottoZiehungenList.getAnzahlZiehungen()-1);
+        return this.gezogeneKugeln;
     }
 
     private int zufallsZahl(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    private void lottokugelnErzeugen() {
-
+    public void lottokugelnErzeugen() {
         Kugel tmpkugel;
-
+        this.lottoTrommel = new KugelList();
         for (int i = 0; i < this.kugelmenge; i++) {
             tmpkugel = new Kugel(i + 1);
             this.lottoTrommel.add(tmpkugel);
         }
     }
 
-    public void lottoziehung() {
+    private void kugelZiehung() {
+        int index = zufallsZahl(0, this.lottoTrommel.size());
+        this.aktuelleKugel = this.lottoTrommel.get(index);
+        this.lottoTrommel.remove(index);
+    }
+    public KugelList lottoziehung() {
         if (gezogeneKugeln.size() > 0){
-            this.gezogeneKugeln.clear();
+            gezogeneKugeln = new KugelList();
+            //this.gezogeneKugeln.clear();
+            this.lottoTrommel.clear();
+            this.lottokugelnErzeugen();
+        } else {
+            this.lottokugelnErzeugen();
         }
         for (int i = 0; i < this.kugelZiehungen; i++) {
             this.kugelZiehung();
             this.aktuelleKugelZiehung++;
             this.gezogeneKugeln.add(this.aktuelleKugel);
         }
-        lottoZiehungenList.add(this.gezogeneKugeln);
+        return this.gezogeneKugeln;
     }
-
-    private void kugelZiehung() {
-
-        int index = zufallsZahl(1, this.lottoTrommel.size())-1;
-        this.aktuelleKugel = this.lottoTrommel.get(index);
-        this.lottoTrommel.remove(index);
-    }
-
-/*
-    private void ziehungDarstellen() {
-
-        System.out.println("in KLotto: " + this.gezogeneKugeln.getAllNummernAsString());
-    }
-*/
 }

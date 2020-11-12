@@ -9,10 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-    public static KugelList lottoTrommel = new KugelList();
-    public static KugelList gezogeneKugeln = new KugelList();
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +21,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final KLotto kl = new KLotto(lottoTrommel, gezogeneKugeln);
+        final KLotto kl = new KLotto(49, 3);
 
         final TextView lotto_output = (TextView) findViewById(R.id.lotto_output);
 
         final Button play_button = (Button) findViewById(R.id.play_button);
+        final TextView lottotip = (TextView) findViewById(R.id.lottotip);
 
         play_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
+
+                KugelList lottotipsplitted = new KugelList();
+                //String lottotiptext = lottotip.getText().toString();
+                //List<String> ls = Arrays.asList(lottotiptext.split(","));
+                lottotipsplitted.addList(Arrays.asList(lottotip.getText().toString().split(",")));
+
+                //Kugellist lottotip = new Kugellist();
+                LottoZiehungenList lottoZiehungenList = new LottoZiehungenList();
                 //lotto_output.setText(gezogeneKugeln.getAllNummernAsString());
-                kl.lottoziehung();
+                lottoZiehungenList.add(kl.lottoziehung());
+
+                int count = lottotipsplitted.countOfEqualKugelNummernWith(lottoZiehungenList.getLetzteZeihung());
                 //lotto_output.setText(gezogeneKugeln.getAllNummernAsString());
-                lotto_output.setText(kl.getLetzteLottoziehung().getAllNummernAsString());
+                lotto_output.setText("Lottoziehung: " + kl.getLetzteLottoziehung().getAllNummernAsString() + "\t Tip: " + lottotipsplitted.getAllNummernAsString() + "\t Gemeinsame Nummern: " + count);
+
             }
         });
 
